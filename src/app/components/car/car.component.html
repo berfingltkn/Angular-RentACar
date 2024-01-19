@@ -1,0 +1,42 @@
+<div class="mb-3">
+  <label for="filterText" class="form-label">Search For Car</label>
+  <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="Enter the phrase to search for:">
+</div>
+
+<div *ngIf="filterText.length>2" class="alert alert-success" role="alert">
+  {{filterText}} you called
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <select [(ngModel)]="branddFilter" class="form-select" aria-label="chose brand">
+      <option value="0">Choose Brand</option>
+      <option [value]="brand.id" *ngFor="let brand of brands">{{brand.name}}</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <select [(ngModel)]="colorrFilter" class="form-select" aria-label="Default select example">
+      <option value="0">Choose Color</option> 
+      <option [value]="color.id" *ngFor="let color of colors">{{color.name}}</option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <button routerLink="/cars/color/{{colorrFilter}}/brand/{{branddFilter}}" style="width: 100%;" class="btn btn-outline-dark" type="button">Filter</button>
+  </div>
+</div>
+
+<div class="row mt-4" style="margin-left: 1%;">
+  <div *ngFor="let car of cars" class="card mt-2 mr-2" style="width: 18rem;margin-right: 10px;">
+    <img *ngIf="car.imagePath" [src]="baseUrl+car.imagePath" class="card-img-top" style="object-fit: cover;" width="100" height="50%" alt="...">
+    <img *ngIf="!car.imagePath" [src]="baseUrl+'DefaultImage.jpg'" class="card-img-top" style="object-fit: cover;" width="100" height="50%" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{ car.name }}</h5> 
+      <p class="card-text">{{ car.brandName }}</p>
+    </div>
+    <div class="card-body">
+      <div class="row"> 
+        <button type="button" class="btn btn-outline-success" [routerLink]="['/cars/carDetails/', car.id]">Car Detail</button>
+      </div> 
+    </div>
+  </div>
+</div>
